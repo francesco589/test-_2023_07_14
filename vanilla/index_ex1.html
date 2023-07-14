@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    <main class="flex flex-col items-center gap-40">
+        <header class="bg-yellow-400 w-full h-20 flex justify-center items-center">
+            <div class="text-3xl font-bold   ">Login</div>
+        </header>
+        <section id="form" class="flex flex-col gap-6 items-center">
+            <div>
+                <label for="usr">Username: </label>
+                <input placeholder="Username" class="w-36 border border-slate-600" id="usr" type="text">
+            </div>
+            <div>
+                <label for="pwd">Password: </label>
+                <input placeholder="Pasword" class="w-36 border border-slate-600" id="pwd" type="text">
+            </div>
+
+            <button class="w-28 bg-amber-300" id="btn">Invia</button>
+           
+        </section>
+        <div id="results"></div>
+    </main>
+
+    <script>
+
+     /*Ex1 (Vanilla JS)
+Realizza un sistema di login, basato su username e password.
+Se lo username è "eliaspower" e la password è "cicalino", il login è corretto, e alla pressione sul pulsante "Login" viene mostrato un pannello di controllo con una semplice scritta: "Sei loggato {username}!" (e il form sparisce).
+Se le credenziali sono incorrette, viene mostrato un messaggio di errore.
+Bonus 1 (+1 pt): l'utente ha solo 3 tentativi, al terzo tentativo errato, viene mostrato un messaggio di errore e il form sparise
+Bonus 2 (+1 pt): in fase di login corretto, l'apparizione del pannello admin avviene dopo 5 secondi e nel frattempo viene mostrata un'immagine loader
+Bonus 3: (+1pt) il bonus 2 viene gestito da Promise*/
+
+function $(id){
+   return(document.getElementById(id))
+}
+const credentials = {username: 'eliaspower', password: 'cicalino'}
+const formSect = $('form')
+const user = $('usr')
+const pass = $('pwd')
+const button = $('btn')
+const result = $('results')
+let count = 2
+
+
+
+function send(){
+  
+        if(credentials.username === user.value && credentials.password === pass.value){ 
+            result.innerHTML = ''
+            formSect.classList.add('hidden')
+            let divErr = document.createElement('div')
+            divErr.innerHTML = `<div class="bg-green-400 p-6 text-3xl">Pannello Admin benvenuto ${credentials.username}<div>`
+            result.appendChild(divErr)
+         }    
+        if (count <= 0){
+            
+            result.innerHTML = ''
+            formSect.classList.add('hidden')
+            console.log("here")
+            
+         }  
+         if (credentials.username !== user.value || credentials.password !== pass.value){
+            result.innerHTML = ''
+            
+            let divErr = document.createElement('div')
+            divErr.innerHTML = `<div class="${count == 0 ? 'bg-red-400':  'bg-yellow-400'} p-6 text-xl">Credenziali invalide ti restano ${count} tentativi<div>`
+            result.appendChild(divErr)
+            count--
+            console.log(count);
+            console.log('here');
+         }
+        
+     
+
+
+       
+      
+
+}
+button.addEventListener('click',() => send())
+
+    </script>
+</body>
+</html>
